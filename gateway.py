@@ -18,4 +18,4 @@ class Agent:
             client.connect(self.host, self.port, username, password, look_for_keys=False)
             client.close()
         except paramiko.AuthenticationException:
-            raise AuthenticationException
+            raise AuthenticationException()

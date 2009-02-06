@@ -1,56 +1,52 @@
 
+import sys
 import gtk
+import gtk.glade
+import pynotify
+
 import gateway
 
 from config import HOST, PORT
 
-class GatewayWindow(gtk.Window):
+class EgmontGateway:
 
     def __init__(self):
-        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
-
-        self.set_title("Egmont Gateway")
+        pynotify.init("Egmont Gateway")
 
         self.agent = gateway.Agent(host=HOST, port=PORT)
-
         self.construct()
 
-    def connect(self):
-        self.agent.connect(self.username, self.password)
+    def connect(self, *args):
+        username = self.username_entry.get_text()
+        password = self.password_entry.get_text()
+
+        print "Attempting to log in as %s" % username
+
+        try:
+            self.agent.connect(username, password)
+            n = pynotify.Notification("Egmont Connect",
+                                      "You are now connected to the Egmont network.")
+            n.show()
+            gtk.main_quit()
+        except gateway.AuthenticationException:
+            dialog = gtk.Dialog("Invalid username or password")
+            dialog.add(gtk.Label("Please specify another username or password."))
+            dialog.add_button(gtk.STOCK_OK, 0)
+            dialog.connect("response", lambda *a: dialog.destroy())
+            dialog.show()
 
     def construct(self):
-        self.set_border_width(12)
+        dic = {'on_gateway_window_destroy': gtk.main_quit,
+               'on_cancel_button_clicked': gtk.main_quit,
+               'on_connect_button_clicked': self.connect}
+        window = gtk.glade.XML("egmont.glade")
+        window.signal_autoconnect(dic)
 
-        table = gtk.Table(rows=4, columns=3)
-        table.set_col_spacing(0, 12)
-        table.set_col_spacing(1, 12)
-        table.set_row_spacings(4)
-        self.add(table)
-
-        heading = gtk.Label()
-        heading.set_markup("<b>Connect to the Egmont Network</b>")
-        heading.set_alignment(0, 0.5)
-        table.attach(heading, 0, 3, 0, 1)
-
-        username_entry = gtk.Entry()
-        username_label = gtk.Label("_Username:")
-        username_label.set_use_underline(True)
-        username_label.set_mnemonic_widget(username_entry)
-        table.attach(username_entry, 2, 3, 2, 3)
-        table.attach(username_label, 1, 2, 2, 3)
-
-        password_entry = gtk.Entry()
-        password_label = gtk.Label("_Password:")
-        password_label.set_use_underline(True)
-        password_label.set_mnemonic_widget(password_entry)
-        table.attach(password_entry, 2, 3, 3, 4)
-        table.attach(password_label, 1, 2, 3, 4)
-
-        table.show_all()
+        self.username_entry = window.get_widget("username-entry")
+        self.password_entry = window.get_widget("password-entry")
 
 
 if __name__ == "__main__":
-    win = GatewayWindow()
-    win.show()
-
+    eg = EgmontGateway()
     gtk.main()
+    sys.exit(0)

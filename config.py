@@ -1,3 +1,3 @@
 
-HOST = "bifrost.ehp.dk"
+HOST = "bifrost.egmont-kol.dk"
 PORT = 22
