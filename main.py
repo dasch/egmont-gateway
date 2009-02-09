@@ -34,6 +34,12 @@ class EgmontGateway:
             dialog.format_secondary_markup("Please specify a correct username and password.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()
+        except gateway.NetworkError:
+            dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
+            dialog.set_markup("<b>Could not connect to network</b>")
+            dialog.format_secondary_markup("Please make sure you have a network connection.")
+            dialog.connect("response", lambda *a: dialog.destroy())
+            dialog.run()
 
     def construct(self):
         dic = {'on_gateway_window_destroy': gtk.main_quit,

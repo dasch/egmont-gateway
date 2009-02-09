@@ -1,7 +1,11 @@
 
 import paramiko
+import socket
 
 class AuthenticationException(Exception):
+    pass
+
+class NetworkError(Exception):
     pass
 
 class Agent:
@@ -19,3 +23,5 @@ class Agent:
             client.close()
         except paramiko.AuthenticationException:
             raise AuthenticationException()
+        except socket.error:
+            raise NetworkError()
