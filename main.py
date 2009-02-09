@@ -38,8 +38,6 @@ class EgmontGateway:
         client.set_string('/apps/egmont-gateway/username', username)
         client.set_string('/apps/egmont-gateway/password', password)
 
-        print "Attempting to log in as %s" % username
-
         try:
             self.agent.connect(username, password)
             n = pynotify.Notification("Egmont Connect",
