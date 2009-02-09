@@ -5,6 +5,7 @@ import os
 import gtk
 import gtk.glade
 import pynotify
+import gconf
 
 import gateway
 
@@ -18,9 +19,24 @@ class EgmontGateway:
         self.agent = gateway.Agent(host=HOST, port=PORT)
         self.construct()
 
+        client = gconf.client_get_default()
+
+        username = client.get_string('/apps/egmont-gateway/username')
+        if username is not None:
+            self.username_entry.set_text(username)
+
+        password = client.get_string('/apps/egmont-gateway/password')
+        if password is not None:
+            self.password_entry.set_text(password)
+
     def connect(self, *args):
         username = self.username_entry.get_text()
         password = self.password_entry.get_text()
+
+        client = gconf.client_get_default()
+
+        client.set_string('/apps/egmont-gateway/username', username)
+        client.set_string('/apps/egmont-gateway/password', password)
 
         print "Attempting to log in as %s" % username
 
