@@ -42,6 +42,12 @@ class EgmontGateway:
             dialog.format_secondary_markup("Please make sure you have a network connection.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()
+        except AccountClosedException:
+            dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
+            dialog.set_markup("<b>Your account has been closed</b>")
+            dialog.format_secondary_markup("You cannot connect to the network until your quota usage drops.")
+            dialog.connect("response", lambda *a: dialog.destroy())
+            dialog.run()
 
     def construct(self):
         pathname = os.path.dirname(sys.argv[0])

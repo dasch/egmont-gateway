@@ -8,6 +8,9 @@ class AuthenticationException(Exception):
 class NetworkError(Exception):
     pass
 
+class AccountClosedException(Exception):
+    pass
+
 class Agent:
 
     def __init__(self, host, port=22):
@@ -22,10 +25,14 @@ class Agent:
             client.connect(self.host, self.port, username, password, look_for_keys=False)
             channel = client.invoke_shell()
             channel.recv(1024)
-            channel.recv(1024)
-            channel.close()
-            client.close()
+            response = channel.recv(1024)
+
+            if response == "This machine or user is closed.":
+                raise AccountClosedException()
         except paramiko.AuthenticationException:
             raise AuthenticationException()
         except socket.error:
             raise NetworkError()
+        finally:
+            channel.close()
+            client.close()
