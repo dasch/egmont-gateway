@@ -29,11 +29,11 @@ class EgmontGateway:
             n.show()
             gtk.main_quit()
         except gateway.AuthenticationException:
-            dialog = gtk.Dialog("Invalid username or password")
-            dialog.add(gtk.Label("Please specify another username or password."))
-            dialog.add_button(gtk.STOCK_OK, 0)
+            dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
+            dialog.set_markup("<b>Failed to authenticate</b>")
+            dialog.format_secondary_markup("Please specify a correct username and password.")
             dialog.connect("response", lambda *a: dialog.destroy())
-            dialog.show()
+            dialog.run()
 
     def construct(self):
         dic = {'on_gateway_window_destroy': gtk.main_quit,
