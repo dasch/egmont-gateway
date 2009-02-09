@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import os
 import gtk
 import gtk.glade
 import pynotify
@@ -43,10 +44,11 @@ class EgmontGateway:
             dialog.run()
 
     def construct(self):
+        pathname = os.path.dirname(sys.argv[0])
         dic = {'on_gateway_window_destroy': gtk.main_quit,
                'on_cancel_button_clicked': gtk.main_quit,
                'on_connect_button_clicked': self.connect}
-        window = gtk.glade.XML("egmont.glade")
+        window = gtk.glade.XML(pathname + "/egmont.glade")
         window.signal_autoconnect(dic)
 
         self.username_entry = window.get_widget("username-entry")
