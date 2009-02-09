@@ -67,13 +67,22 @@ class EgmontGateway:
         pathname = os.path.dirname(sys.argv[0])
         dic = {'on_gateway_window_destroy': gtk.main_quit,
                'on_cancel_button_clicked': gtk.main_quit,
-               'on_connect_button_clicked': self.connect}
+               'on_connect_button_clicked': self.connect,
+               'on_username_entry_changed': self.changed_cb,
+               'on_password_entry_changed': self.changed_cb}
         window = gtk.glade.XML(pathname + "/egmont.glade")
         window.signal_autoconnect(dic)
 
         self.username_entry = window.get_widget("username-entry")
         self.password_entry = window.get_widget("password-entry")
+        self.connect_button = window.get_widget("connect-button")
 
+    def changed_cb(self, *args):
+        username = self.username_entry.get_text()
+        password = self.password_entry.get_text()
+
+        self.connect_button.set_sensitive(username != "" and password != "")
+    
 
 if __name__ == "__main__":
     eg = EgmontGateway()

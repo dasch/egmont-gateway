@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Mon Feb  9 20:51:38 2009 -->
+<!--Generated with glade3 3.4.5 on Mon Feb  9 21:07:28 2009 -->
 <glade-interface>
   <widget class="GtkDialog" id="gateway-window">
     <property name="visible">True</property>
@@ -36,19 +36,58 @@
               <placeholder/>
             </child>
             <child>
-              <widget class="GtkLabel" id="heading-label">
+              <widget class="GtkImage" id="icon">
+                <property name="visible">True</property>
+                <property name="yalign">0</property>
+                <property name="stock">gtk-dialog-authentication</property>
+                <property name="icon_size">6</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="password-entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="visibility">False</property>
+                <property name="activates_default">True</property>
+                <accessibility>
+                  <atkrelation target="password-label" type="labelled-by"/>
+                </accessibility>
+                <signal name="changed" handler="on_password_entry_changed"/>
+              </widget>
+              <packing>
+                <property name="left_attach">3</property>
+                <property name="right_attach">4</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="username-entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="activates_default">True</property>
+                <signal name="changed" handler="on_username_entry_changed"/>
+              </widget>
+              <packing>
+                <property name="left_attach">3</property>
+                <property name="right_attach">4</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="password-label">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Connect to the Egmont Network&lt;/b&gt;&lt;/big&gt;
-
-Enter your username and password to gain access to the Internet.
-</property>
-                <property name="use_markup">True</property>
-                <property name="wrap">True</property>
+                <property name="label" translatable="yes">_Password:</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">password-entry</property>
               </widget>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="right_attach">4</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
               </packing>
             </child>
             <child>
@@ -70,57 +109,20 @@ Enter your username and password to gain access to the Internet.
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="password-label">
+              <widget class="GtkLabel" id="heading-label">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">_Password:</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">password-entry</property>
+                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Connect to the Egmont Network&lt;/b&gt;&lt;/big&gt;
+
+Enter your username and password to gain access to the Internet.
+</property>
+                <property name="use_markup">True</property>
+                <property name="wrap">True</property>
               </widget>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkEntry" id="username-entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="activates_default">True</property>
-              </widget>
-              <packing>
-                <property name="left_attach">3</property>
                 <property name="right_attach">4</property>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
               </packing>
-            </child>
-            <child>
-              <widget class="GtkEntry" id="password-entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="visibility">False</property>
-                <property name="activates_default">True</property>
-                <accessibility>
-                  <atkrelation target="password-label" type="labelled-by"/>
-                </accessibility>
-              </widget>
-              <packing>
-                <property name="left_attach">3</property>
-                <property name="right_attach">4</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkImage" id="icon">
-                <property name="visible">True</property>
-                <property name="yalign">0</property>
-                <property name="stock">gtk-dialog-authentication</property>
-                <property name="icon_size">6</property>
-              </widget>
             </child>
           </widget>
           <packing>
@@ -145,6 +147,7 @@ Enter your username and password to gain access to the Internet.
             <child>
               <widget class="GtkButton" id="connect-button">
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
