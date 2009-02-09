@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Fri Feb  6 22:10:08 2009 -->
+<!--Generated with glade3 3.4.5 on Mon Feb  9 14:32:33 2009 -->
 <glade-interface>
   <widget class="GtkDialog" id="gateway-window">
     <property name="visible">True</property>
+    <property name="extension_events">GDK_EXTENSION_EVENTS_ALL</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Egmont Gateway</property>
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
@@ -27,40 +28,19 @@
               <placeholder/>
             </child>
             <child>
-              <widget class="GtkLabel" id="heading-label">
+              <widget class="GtkLabel" id="username-label">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">&lt;b&gt;Connect to the Egmont Network&lt;/b&gt;</property>
-                <property name="use_markup">True</property>
-              </widget>
-              <packing>
-                <property name="right_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkEntry" id="password-entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="visibility">False</property>
+                <property name="label" translatable="yes">_Username:</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">username-entry</property>
                 <accessibility>
-                  <atkrelation target="password-label" type="labelled-by"/>
+                  <atkrelation target="username-entry" type="label-for"/>
                 </accessibility>
               </widget>
               <packing>
-                <property name="left_attach">2</property>
-                <property name="right_attach">3</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkEntry" id="username-entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-              </widget>
-              <packing>
-                <property name="left_attach">2</property>
-                <property name="right_attach">3</property>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
                 <property name="top_attach">1</property>
                 <property name="bottom_attach">2</property>
               </packing>
@@ -81,21 +61,44 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="username-label">
+              <widget class="GtkEntry" id="username-entry">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">_Username:</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">username-entry</property>
+                <property name="can_focus">True</property>
+                <property name="activates_default">True</property>
+              </widget>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="password-entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="visibility">False</property>
+                <property name="activates_default">True</property>
                 <accessibility>
-                  <atkrelation target="username-entry" type="label-for"/>
+                  <atkrelation target="password-label" type="labelled-by"/>
                 </accessibility>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="heading-label">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;b&gt;Connect to the Egmont Network&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">3</property>
               </packing>
             </child>
           </widget>
@@ -122,6 +125,8 @@
               <widget class="GtkButton" id="connect-button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="label" translatable="yes">gtk-connect</property>
                 <property name="use_stock">True</property>
