@@ -21,8 +21,8 @@ class Agent:
         try:
             client.connect(self.host, self.port, username, password, look_for_keys=False)
             channel = client.invoke_shell()
-            print channel.recv(1024)
-            print channel.recv(1024)
+            channel.recv(1024)
+            channel.recv(1024)
             channel.close()
             client.close()
         except paramiko.AuthenticationException:
