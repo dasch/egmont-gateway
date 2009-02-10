@@ -1,0 +1,15 @@
+Source: egmont-gateway
+Section: shells
+Priority: extra
+Maintainer: Daniel Schierbeck <daniel.schierbeck@gmail.com>
+Build-Depends: python (>=2.4), debhelper, python-central
+XS-Python-Version: >=2.4
+Standards-Version: 3.7.2
+
+Package: egmont-gateway
+Architecture: any
+XB-Python-Version: ${python:Versions}
+Depends: python (>=2.4), python-central
+Description: Connect to the Egmont network
+ This package provides a convenient graphical user interface for connecting to
+ the Egmont network.
