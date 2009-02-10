@@ -9,7 +9,8 @@ setup(name='egmont-gateway',
       author_email='daniel.schierbeck@gmail.com',
       url='http://github.com/dasch/egmont-gateway',
       packages=['egmont'],
-      data_files=[('share/egmont-gateway/glade', ['data/egmont.glade'])],
+      data_files=[('share/egmont-gateway/glade', ['data/egmont.glade']),
+                  ('share/applications', ['data/egmont-gateway.desktop'])],
       scripts=['egmont-gateway'],
      )
 
