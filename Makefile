@@ -18,7 +18,7 @@ buildrpm:
 
 builddeb:
 		mkdir -p ${BUILDIR}
-		DESTDIR=$(BUILDIR) dpkg-buildpackage -rfakeroot
+		DESTDIR=$(BUILDIR) dpkg-buildpackage -rfakeroot -S -sa
 
 clean:
 		$(PYTHON) setup.py clean
