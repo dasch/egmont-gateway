@@ -8,6 +8,7 @@ setup(name='Egmont Connect',
       author='Daniel Schierbeck',
       author_email='daniel.schierbeck@gmail.com',
       url='http://github.com/dasch/egmont-gateway',
-      packages=['distutils', 'distutils.command'],
+      packages=['egmont'],
+      data_files=[('share', 'data/egmont.glade')],
      )
 
