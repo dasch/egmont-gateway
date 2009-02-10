@@ -9,7 +9,7 @@ Standards-Version: 3.7.2
 Package: egmont-gateway
 Architecture: any
 XB-Python-Version: ${python:Versions}
-Depends: python (>=2.4), python-central
+Depends: python (>=2.4), python-central, python-paramiko, python-gconf, python-gtk2, python-notify, python-glade2
 Description: Connect to the Egmont network
  This package provides a convenient graphical user interface for connecting to
  the Egmont network.
