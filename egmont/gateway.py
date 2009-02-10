@@ -2,6 +2,9 @@
 import paramiko
 import socket
 
+HOST = "bifrost.egmont-kol.dk"
+PORT = 22
+
 class AuthenticationException(Exception):
     pass
 
@@ -13,7 +16,7 @@ class AccountClosedException(Exception):
 
 class Agent:
 
-    def __init__(self, host, port=22):
+    def __init__(self, host=HOST, port=PORT):
         self.host = host
         self.port = port
         self.client = paramiko.SSHClient()

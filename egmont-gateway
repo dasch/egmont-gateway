@@ -7,16 +7,14 @@ import gtk.glade
 import pynotify
 import gconf
 
-import gateway
-
-from config import HOST, PORT
+from egmont.gateway import Agent
 
 class EgmontGateway:
 
     def __init__(self):
         pynotify.init("Egmont Gateway")
 
-        self.agent = gateway.Agent(host=HOST, port=PORT)
+        self.agent = Agent()
         self.construct()
 
         client = gconf.client_get_default()
