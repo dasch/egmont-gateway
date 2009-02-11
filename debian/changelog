@@ -1,3 +1,9 @@
+egmont-gateway (0.2) intrepid; urgency=low
+
+  * Fixed namespace errors.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Wed, 11 Feb 2009 15:57:11 +0100
+
 egmont-gateway (0.1ubuntu3) intrepid; urgency=low
 
   * Dear God...
