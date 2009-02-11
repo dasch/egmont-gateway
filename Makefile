@@ -1,8 +1,6 @@
 PYTHON=`which python`
 DESTDIR=/
 BUILDIR=$(CURDIR)/debian/egmont-gateway
-PROJECT=myprojectname
-VERSION=0.2
 
 all:
 		@echo "make install - Install on local system"
@@ -18,7 +16,7 @@ buildrpm:
 
 builddeb:
 		mkdir -p ${BUILDIR}
-		DESTDIR=$(BUILDIR) dpkg-buildpackage -rfakeroot -S
+		DESTDIR=$(BUILDIR) debuild -S
 
 clean:
 		$(PYTHON) setup.py clean

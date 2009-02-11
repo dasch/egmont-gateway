@@ -1,61 +1,9 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
-#
-# $Id: rules,v 1.5 2008/10/25 14:22:05 ghantoos Exp $
-#
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
 
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	# Add here commands to configure the package.
+DEB_PYTHON_SYSTEM=pysupport
 
-	touch configure-stamp
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/python-distutils.mk
 
-build: build-stamp
-
-build-stamp: configure-stamp
-	dh_testdir
-
-	# Add here commands to compile the package.
-	$(MAKE)
-
-	touch $@
-
-clean:
-	dh_testdir
-	rm -f build-stamp configure-stamp
-	dh_clean 
-
-install: build
-	# Add here commands to install the package into debian/myprojectname
-	# refer to Makefile
-	$(MAKE) DESTDIR=${DESTDIR} COMPILE=--no-compile install
-
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testroot
-	dh_installchangelogs CHANGES
-	dh_pycentral
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+# Don't compress .py files
+DEB_COMPRESS_EXCLUDE := .py

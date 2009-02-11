@@ -2,13 +2,12 @@ Source: egmont-gateway
 Section: shells
 Priority: extra
 Maintainer: Daniel Schierbeck <daniel.schierbeck@gmail.com>
-Build-Depends: python (>=2.4), debhelper, python-central
-XS-Python-Version: >=2.4
+Build-Depends: cdbs (>= 0.4.49), python (>=2.4), debhelper (>= 5.0.38), python-support
 Standards-Version: 3.8.0
+XS-Python-Version: 2.5
 
 Package: egmont-gateway
 Architecture: any
-XB-Python-Version: ${python:Versions}
 Depends: python (>=2.4), python-central, python-paramiko, python-gconf, python-gtk2, python-notify, python-glade2
 Description: Connect to the Egmont network
  This package provides a convenient graphical user interface for connecting to

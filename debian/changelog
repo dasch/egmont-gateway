@@ -1,3 +1,15 @@
+egmont-gateway (0.1ubuntu3) intrepid; urgency=low
+
+  * Dear God...
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Wed, 11 Feb 2009 01:48:32 +0100
+
+egmont-gateway (0.1ubuntu2) intrepid; urgency=low
+
+  * Should be fixed now.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Wed, 11 Feb 2009 01:25:44 +0100
+
 egmont-gateway (0.1ubuntu1) intrepid; urgency=low
 
   * Fixed packaging issues.
