@@ -7,14 +7,14 @@ import gtk.glade
 import pynotify
 import gconf
 
-from egmont.gateway import Agent
+import egmont.gateway as gateway
 
 class EgmontGateway:
 
     def __init__(self):
         pynotify.init("Egmont Gateway")
 
-        self.agent = Agent()
+        self.agent = gateway.Agent()
         self.construct()
 
         client = gconf.client_get_default()
@@ -54,7 +54,7 @@ class EgmontGateway:
             dialog.format_secondary_markup("Please make sure you have a network connection.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()
-        except AccountClosedException:
+        except gateway.AccountClosedException:
             dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
             dialog.set_markup("<b>Your account has been closed</b>")
             dialog.format_secondary_markup("You cannot connect to the network until your quota usage drops.")
