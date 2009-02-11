@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='egmont-gateway',
-      version='0.2',
+      version='0.3',
       description='Connect to the Egmont network',
       author='Daniel Schierbeck',
       author_email='daniel.schierbeck@gmail.com',

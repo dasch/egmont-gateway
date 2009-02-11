@@ -1,3 +1,9 @@
+egmont-gateway (0.3ubuntu1) intrepid; urgency=low
+
+  * Use the GNOME keyring to store passwords.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Wed, 11 Feb 2009 17:10:08 +0100
+
 egmont-gateway (0.2ubuntu1) intrepid; urgency=low
 
   * Fixed namespace errors.
