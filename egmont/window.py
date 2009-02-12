@@ -20,6 +20,12 @@ class Window:
         self.username = config.get_username()
         self.password = config.get_password(self.host, self.port, self.username)
 
+        if self.host is not None:
+            self.host_entry.set_text(self.host)
+
+        if self.port is not None:
+            self.port_entry.set_text(str(self.port))
+
         if self.username is not None:
             self.username_entry.set_text(self.username)
 
@@ -59,13 +65,23 @@ class Window:
                'on_cancel_button_clicked': gtk.main_quit,
                'on_connect_button_clicked': self.connect,
                'on_username_entry_changed': self.username_changed_cb,
-               'on_password_entry_changed': self.password_changed_cb}
+               'on_password_entry_changed': self.password_changed_cb,
+               'on_host_entry_changed': self.host_changed_cb,
+               'on_port_entry_changed': self.port_changed_cb}
         window = gtk.glade.XML(sys.prefix + "/share/egmont-gateway/glade/egmont.glade")
         window.signal_autoconnect(dic)
 
+        self.host_entry = window.get_widget("host-entry")
+        self.port_entry = window.get_widget("port-entry")
         self.username_entry = window.get_widget("username-entry")
         self.password_entry = window.get_widget("password-entry")
         self.connect_button = window.get_widget("connect-button")
+
+    def host_changed_cb(self, *args):
+        self.host = self.host_entry.get_text()
+
+    def port_changed_cb(self, *args):
+        self.port = int(self.port_entry.get_text())
 
     def username_changed_cb(self, *args):
         self.username = self.username_entry.get_text()
