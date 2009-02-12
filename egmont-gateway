@@ -14,8 +14,12 @@ class EgmontGateway:
     def __init__(self):
         pynotify.init("Egmont Gateway")
 
-        self.agent = gateway.Agent()
         self.construct()
+
+        self.host = "bifrost.egmont-kol.dk"
+        self.port = 22
+        self.username = ""
+        self.password = ""
 
         self.keyring = gkeyring.get_default_keyring_sync()
 
@@ -23,7 +27,7 @@ class EgmontGateway:
 
     def get_credentials(self):
         try:
-            attrs = {"server": self.agent.host, "protocol": "ssh"}
+            attrs = {"server": self.host, "protocol": "ssh"}
             items = gkeyring.find_items_sync(gkeyring.ITEM_NETWORK_PASSWORD, attrs)
             if len(items) is 0:
                 return
@@ -37,16 +41,13 @@ class EgmontGateway:
             pass
 
     def connect(self, *args):
-        username = self.username_entry.get_text()
-        password = self.password_entry.get_text()
-
-        attrs = {"user": username, "server": self.agent.host, "protocol": "ssh"}
+        attrs = {"user": self.username, "server": self.host, "protocol": "ssh"}
         gkeyring.item_create_sync(self.keyring,
                 gkeyring.ITEM_NETWORK_PASSWORD,
-                "egmont-gateway", attrs, password, True)
+                "egmont-gateway", attrs, self.password, True)
 
         try:
-            self.agent.connect(username, password)
+            gateway.connect(self.host, self.port, self.username, self.password)
             n = pynotify.Notification("Egmont Connect",
                                       "You are now connected to the Egmont network.")
             n.show()
@@ -74,8 +75,8 @@ class EgmontGateway:
         dic = {'on_gateway_window_destroy': gtk.main_quit,
                'on_cancel_button_clicked': gtk.main_quit,
                'on_connect_button_clicked': self.connect,
-               'on_username_entry_changed': self.changed_cb,
-               'on_password_entry_changed': self.changed_cb}
+               'on_username_entry_changed': self.username_changed_cb,
+               'on_password_entry_changed': self.password_changed_cb}
         window = gtk.glade.XML(sys.prefix + "/share/egmont-gateway/glade/egmont.glade")
         window.signal_autoconnect(dic)
 
@@ -83,11 +84,16 @@ class EgmontGateway:
         self.password_entry = window.get_widget("password-entry")
         self.connect_button = window.get_widget("connect-button")
 
-    def changed_cb(self, *args):
-        username = self.username_entry.get_text()
-        password = self.password_entry.get_text()
+    def username_changed_cb(self, *args):
+        self.username = self.username_entry.get_text()
+        self.credentials_changed_cb()
 
-        self.connect_button.set_sensitive(username != "" and password != "")
+    def password_changed_cb(self, *args):
+        self.password = self.password_entry.get_text()
+        self.credentials_changed_cb()
+
+    def credentials_changed_cb(self):
+        self.connect_button.set_sensitive(self.username != "" and self.password != "")
     
 
 if __name__ == "__main__":
