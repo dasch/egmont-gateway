@@ -1,3 +1,10 @@
+egmont-gateway (0.4ubuntu1) intrepid; urgency=low
+
+  * Added advanced network settings.
+  * Refactored internals.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Fri, 13 Feb 2009 00:03:53 +0100
+
 egmont-gateway (0.3ubuntu1) intrepid; urgency=low
 
   * Use the GNOME keyring to store passwords.
