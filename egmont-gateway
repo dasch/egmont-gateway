@@ -5,9 +5,9 @@ import os
 import gtk
 import gtk.glade
 import pynotify
-import gnomekeyring as gkeyring
 
 import egmont.gateway as gateway
+import egmont.config as config
 
 class EgmontGateway:
 
@@ -16,35 +16,19 @@ class EgmontGateway:
 
         self.construct()
 
-        self.host = "bifrost.egmont-kol.dk"
-        self.port = 22
-        self.username = ""
-        self.password = ""
+        self.host = config.get_host()
+        self.port = config.get_port()
+        self.username = config.get_username()
+        self.password = config.get_password(self.host, self.port, self.username)
 
-        self.keyring = gkeyring.get_default_keyring_sync()
+        if self.username is not None:
+            self.username_entry.set_text(self.username)
 
-        self.get_credentials()
-
-    def get_credentials(self):
-        try:
-            attrs = {"server": self.host, "protocol": "ssh"}
-            items = gkeyring.find_items_sync(gkeyring.ITEM_NETWORK_PASSWORD, attrs)
-            if len(items) is 0:
-                return
-
-            item = items[0]
-            self.username_entry.set_text(item.attributes["user"])
-            self.password_entry.set_text(item.secret)
-        except gkeyring.DeniedError:
-            pass
-        except gkeyring.NoMatchError:
-            pass
-
+        if self.password is not None:
+            self.password_entry.set_text(self.password)
+        
     def connect(self, *args):
-        attrs = {"user": self.username, "server": self.host, "protocol": "ssh"}
-        gkeyring.item_create_sync(self.keyring,
-                gkeyring.ITEM_NETWORK_PASSWORD,
-                "egmont-gateway", attrs, self.password, True)
+        config.set_credentials(self.host, self.port, self.username, self.password)
 
         try:
             gateway.connect(self.host, self.port, self.username, self.password)
