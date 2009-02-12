@@ -33,32 +33,37 @@ class Window:
             self.password_entry.set_text(self.password)
         
     def connect(self, *args):
-        config.set_credentials(self.host, self.port, self.username, self.password)
+        self.window.set_sensitive(False)
 
         try:
             gateway.connect(self.host, self.port, self.username, self.password)
+            config.set_credentials(self.host, self.port, self.username, self.password)
             n = pynotify.Notification("Egmont Connect",
                                       "You are now connected to the Egmont network.")
             n.show()
-            gtk.main_quit()
         except gateway.AuthenticationException:
             dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
             dialog.set_markup("<b>Failed to authenticate</b>")
             dialog.format_secondary_markup("Please specify a correct username and password.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()
+            self.window.set_sensitive(True)
         except gateway.NetworkError:
             dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
             dialog.set_markup("<b>Could not connect to %s on port %i</b>" % (self.host, self.port))
             dialog.format_secondary_markup("Please make sure you have a network connection.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()
+            self.window.set_sensitive(True)
         except gateway.AccountClosedException:
             dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
             dialog.set_markup("<b>Your account has been closed</b>")
             dialog.format_secondary_markup("You cannot connect to the network until your quota usage drops.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()
+            self.window.set_sensitive(True)
+        else:
+            gtk.main_quit()
 
     def construct(self):
         dic = {'on_gateway_window_destroy': gtk.main_quit,
@@ -68,14 +73,16 @@ class Window:
                'on_password_entry_changed': self.password_changed_cb,
                'on_host_entry_changed': self.host_changed_cb,
                'on_port_entry_changed': self.port_changed_cb}
-        window = gtk.glade.XML(sys.prefix + "/share/egmont-gateway/glade/egmont.glade")
-        window.signal_autoconnect(dic)
+        gui = gtk.glade.XML(sys.prefix + "/share/egmont-gateway/glade/egmont.glade")
+        gui.signal_autoconnect(dic)
 
-        self.host_entry = window.get_widget("host-entry")
-        self.port_entry = window.get_widget("port-entry")
-        self.username_entry = window.get_widget("username-entry")
-        self.password_entry = window.get_widget("password-entry")
-        self.connect_button = window.get_widget("connect-button")
+        self.window = gui.get_widget("gateway-window")
+
+        self.host_entry = gui.get_widget("host-entry")
+        self.port_entry = gui.get_widget("port-entry")
+        self.username_entry = gui.get_widget("username-entry")
+        self.password_entry = gui.get_widget("password-entry")
+        self.connect_button = gui.get_widget("connect-button")
 
     def host_changed_cb(self, *args):
         self.host = self.host_entry.get_text()
