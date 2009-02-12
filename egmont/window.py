@@ -49,7 +49,7 @@ class Window:
             dialog.run()
         except gateway.NetworkError:
             dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
-            dialog.set_markup("<b>Could not connect to network</b>")
+            dialog.set_markup("<b>Could not connect to %s on port %i</b>" % (self.host, self.port))
             dialog.format_secondary_markup("Please make sure you have a network connection.")
             dialog.connect("response", lambda *a: dialog.destroy())
             dialog.run()

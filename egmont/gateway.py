@@ -3,6 +3,9 @@ import paramiko
 import socket
 
 
+TIMEOUT=10
+
+
 class AuthenticationException(Exception):
     pass
 
@@ -20,7 +23,7 @@ def connect(host, port, username, password):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     try:
-        client.connect(host, port, username, password, look_for_keys=False)
+        client.connect(host, port, username, password, look_for_keys=False, timeout=TIMEOUT)
         try:
             channel = client.invoke_shell()
             channel.recv(1024)
