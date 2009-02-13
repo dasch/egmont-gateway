@@ -7,6 +7,8 @@ import pynotify
 
 import gateway
 import config
+from gateway import AuthenticationException, NetworkError, AccountClosedException
+from dialog import display_error
 
 class Window:
 
@@ -41,26 +43,21 @@ class Window:
             n = pynotify.Notification("Egmont Connect",
                                       "You are now connected to the Egmont network.")
             n.show()
-        except gateway.AuthenticationException:
-            dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
-            dialog.set_markup("<b>Failed to authenticate</b>")
-            dialog.format_secondary_markup("Please specify a correct username and password.")
-            dialog.connect("response", lambda *a: dialog.destroy())
-            dialog.run()
-            self.window.set_sensitive(True)
-        except gateway.NetworkError:
-            dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
-            dialog.set_markup("<b>Could not connect to %s on port %i</b>" % (self.host, self.port))
-            dialog.format_secondary_markup("Please make sure you have a network connection.")
-            dialog.connect("response", lambda *a: dialog.destroy())
-            dialog.run()
-            self.window.set_sensitive(True)
-        except gateway.AccountClosedException:
-            dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE)
-            dialog.set_markup("<b>Your account has been closed</b>")
-            dialog.format_secondary_markup("You cannot connect to the network until your quota usage drops.")
-            dialog.connect("response", lambda *a: dialog.destroy())
-            dialog.run()
+        except (AuthenticationException, NetworkError, AccountClosedException), error:
+            if type(error) == AuthenticationException: 
+                title = "Failed to authenticate"
+                message = "Please specify a correct username and password."
+            elif type(error) == NetworkError:
+                title = "Could not connect to %s on port %i" % (self.host, self.port)
+                message = "Please make sure you have a network connection."
+            elif type(error) == AccountClosedException:
+                title = "Your account has been closed"
+                message = "You cannot connect to the network until your quota usage drops."
+            else:
+                title = "Unknown error"
+                message = str(error)
+
+            display_error(title, message)
             self.window.set_sensitive(True)
         else:
             gtk.main_quit()
