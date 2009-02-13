@@ -1,3 +1,10 @@
+egmont-gateway (0.5ubuntu1) intrepid; urgency=low
+
+  * Refactored and improved the error handling.
+  * Improved the look and feel of the application.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Fri, 13 Feb 2009 17:04:25 +0100
+
 egmont-gateway (0.4ubuntu1) intrepid; urgency=low
 
   * Added advanced network settings.
