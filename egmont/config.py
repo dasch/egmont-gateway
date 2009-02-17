@@ -10,12 +10,13 @@ DEFAULT_HOST = "bifrost.egmont-kol.dk"
 DEFAULT_PORT = 22
 
 
+_get_password = gkeyring.find_network_password_sync
+_set_password = gkeyring.set_network_password_sync
+
+
 def get_password(host, port, username):
     try:
-        items = gkeyring.find_network_password_sync(server=host,
-                                                    port=port,
-                                                    protocol="ssh",
-                                                    user=username)
+        items = _get_password(server=host, port=port, protocol="ssh", user=username)
 
         if len(items) is not 0:
             return items[0]["password"]
@@ -28,11 +29,7 @@ def set_credentials(host, port, username, password):
     set_port(port)
     set_username(username)
 
-    gkeyring.set_network_password_sync(user=username,
-                                       password=password,
-                                       server=host,
-                                       port=port,
-                                       protocol="ssh")
+    _set_password(user=username, password=password, server=host, port=port, protocol="ssh")
 
 
 def get_username():
