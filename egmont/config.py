@@ -14,6 +14,13 @@ _get_password = gkeyring.find_network_password_sync
 _set_password = gkeyring.set_network_password_sync
 
 
+def _get_string(key):
+    return GCONF_CLIENT.get_string('/apps/egmont-gateway/%s' % key)
+
+def _set_string(key, value):
+    GCONF_CLIENT.set_string('/apps/egmont-gateway/%s' % key, value)
+
+
 def get_password(host, port, username):
     try:
         items = _get_password(server=host, port=port, protocol="ssh", user=username)
@@ -33,19 +40,19 @@ def set_credentials(host, port, username, password):
 
 
 def get_username():
-    return GCONF_CLIENT.get_string('/apps/egmont-gateway/username')
+    return _get_string('username')
 
 
 def set_username(username):
-    return GCONF_CLIENT.set_string('/apps/egmont-gateway/username', username)
+    _set_string('username', username)
 
 
 def get_host():
-    return GCONF_CLIENT.get_string('/apps/egmont-gateway/host') or DEFAULT_HOST
+    return _get_string('host') or DEFAULT_HOST
 
 
 def set_host(host):
-    return GCONF_CLIENT.set_string('/apps/egmont-gateway/host', host)
+    _set_string('host', host)
 
 
 def get_port():
