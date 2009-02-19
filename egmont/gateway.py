@@ -26,7 +26,11 @@ def connect(host, port, username, password):
         client.connect(host, port, username, password, look_for_keys=False, timeout=TIMEOUT)
         try:
             channel = client.invoke_shell()
+
+            # Receive the shell greeting.
             channel.recv(1024)
+
+            # Receive the account status.
             response = channel.recv(1024)
 
             if response == "This machine or user is closed.":
