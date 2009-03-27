@@ -1,8 +1,8 @@
-egmont-gateway (0.6ubuntu1) intrepid; urgency=low
+egmont-gateway (0.6ubuntu1) jaunty; urgency=low
 
   * Refactored config module.
 
- -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Tue, 17 Feb 2009 20:38:14 +0100
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Fri, 27 Mar 2009 15:34:30 +0100
 
 egmont-gateway (0.5ubuntu1) intrepid; urgency=low
 
