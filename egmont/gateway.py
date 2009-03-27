@@ -23,7 +23,7 @@ def connect(host, port, username, password):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     try:
-        client.connect(host, port, username, password, look_for_keys=False, timeout=TIMEOUT)
+        client.connect(host, port, username, password, look_for_keys=False, allow_agent=False, timeout=TIMEOUT)
         try:
             channel = client.invoke_shell()
 
