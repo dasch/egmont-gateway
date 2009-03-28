@@ -15,7 +15,7 @@ pynotify.init("Egmont Gateway")
 
 
 def notify(message):
-    n = pynotify.Notification("Egmont Connect", message, gtk.STOCK_CONNECT)
+    n = pynotify.Notification(message, "", gtk.STOCK_CONNECT)
     n.set_urgency(pynotify.URGENCY_LOW)
     n.show()
 
@@ -49,7 +49,7 @@ class Window:
         try:
             gateway.connect(self.host, self.port, self.username, self.password)
             config.set_credentials(self.host, self.port, self.username, self.password)
-            notify("You are now connected to the Egmont network.")
+            notify("Connected to the Egmont network")
         except (AuthenticationException, NetworkError, AccountClosedException), error:
             if type(error) == AuthenticationException: 
                 title = "Failed to authenticate"
