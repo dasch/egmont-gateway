@@ -1,3 +1,9 @@
+egmont-gateway (0.7ubuntu2) jaunty; urgency=low
+
+  * Fixed build error. 
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Tue, 07 Apr 2009 14:37:43 +0200
+
 egmont-gateway (0.7ubuntu1) jaunty; urgency=low
 
   * Improved notifications.
