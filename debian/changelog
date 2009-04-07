@@ -1,3 +1,9 @@
+egmont-gateway (0.8ubuntu1) jaunty; urgency=low
+
+  * Fix crasher caused by missing keyring daemon. 
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Tue, 07 Apr 2009 15:46:03 +0200
+
 egmont-gateway (0.7ubuntu3) jaunty; urgency=low
 
   * Require Python 2.6 in build. 
