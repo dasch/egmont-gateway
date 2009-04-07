@@ -2,7 +2,11 @@
 import gnomekeyring as gkeyring
 import gconf
 
-KEYRING = gkeyring.get_default_keyring_sync()
+try:
+    KEYRING = gkeyring.get_default_keyring_sync()
+except gkeyring.NoKeyringDaemonError:
+    KEYRING = None
+
 GCONF_CLIENT = gconf.client_get_default()
 
 
@@ -22,6 +26,9 @@ def _set_string(key, value):
 
 
 def get_password(host, port, username):
+    if KEYRING is None:
+        return
+
     try:
         items = _get_password(server=host, port=port, protocol="ssh", user=username)
 
@@ -36,7 +43,9 @@ def set_credentials(host, port, username, password):
     set_port(port)
     set_username(username)
 
-    _set_password(user=username, password=password, server=host, port=port, protocol="ssh")
+    if KEYRING is not None:
+        _set_password(user=username, password=password,
+                      server=host, port=port, protocol="ssh")
 
 
 def get_username():
