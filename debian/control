@@ -4,6 +4,7 @@ Priority: extra
 Maintainer: Daniel Schierbeck <daniel.schierbeck@gmail.com>
 Build-Depends: cdbs (>= 0.4.49), python (>=2.4), debhelper (>= 5.0.38), python-support
 Standards-Version: 3.8.0
+XS-Python-Version: 2.6
 
 Package: egmont-gateway
 Architecture: any
