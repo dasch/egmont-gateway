@@ -15,7 +15,7 @@ pynotify.init("Egmont Gateway")
 
 
 def notify(message):
-    n = pynotify.Notification(message, "", gtk.STOCK_CONNECT)
+    n = pynotify.Notification(message, "", "notification-network-ethernet-connected")
     n.set_urgency(pynotify.URGENCY_LOW)
     n.show()
 
