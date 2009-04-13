@@ -1,3 +1,9 @@
+egmont-gateway (0.9ubuntu1) jaunty; urgency=low
+
+  * Improved handling of exceeded quotas. 
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Mon, 13 Apr 2009 21:06:15 +0200
+
 egmont-gateway (0.8ubuntu1) jaunty; urgency=low
 
   * Fix crasher caused by missing keyring daemon. 
