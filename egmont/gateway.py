@@ -28,14 +28,13 @@ def connect(host, port, username, password):
         try:
             channel = client.invoke_shell()
 
-            # Receive the shell greeting.
-            channel.recv(1024)
+            while True:
+                response = channel.recv(1024)
 
-            # Receive the account status.
-            response = channel.recv(1024)
-
-            if response == "This machine or user is closed.":
-                raise AccountClosedException()
+                if response == "":
+                    break
+                elif "machine or user is closed" in response:
+                    raise AccountClosedException()
         finally:
             channel.close()
     except paramiko.AuthenticationException:
