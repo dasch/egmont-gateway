@@ -7,18 +7,22 @@ TIMEOUT=10
 
 
 class AuthenticationException(Exception):
+    """Raised when invalid credentials are given."""
     pass
 
 
 class NetworkError(Exception):
+    """Raised when network errors occur."""
     pass
 
 
 class AccountClosedException(Exception):
+    """Raised if the account has been closed."""
     pass
 
 
 def connect(host, port, username, password):
+    """Connect to the given host."""
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
