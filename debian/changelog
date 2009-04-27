@@ -1,8 +1,9 @@
 egmont-gateway (0.10ubuntu1) jaunty; urgency=low
 
   * Allow automatic login.
+  * Make storing the password optional.
 
- -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Mon, 27 Apr 2009 13:02:45 +0200
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Mon, 27 Apr 2009 13:35:09 +0200
 
 egmont-gateway (0.9ubuntu1) jaunty; urgency=low
 
