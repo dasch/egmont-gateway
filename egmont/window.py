@@ -20,6 +20,30 @@ def notify(message):
     n.show()
 
 
+def connect(host, port, username, password):
+    try:
+        gateway.connect(host, port, username, password)
+        notify("You are now connected")
+    except (AuthenticationException, NetworkError, AccountClosedException) as error:
+        if type(error) == AuthenticationException: 
+            title = "Failed to authenticate"
+            message = "Please specify a correct username and password."
+        elif type(error) == NetworkError:
+            title = "Could not connect to %s on port %i" % (host, port)
+            message = "Please make sure you have a network connection."
+        elif type(error) == AccountClosedException:
+            title = "Your account has been closed"
+            message = "You cannot connect to the network until your quota usage drops."
+        else:
+            title = "Unknown error"
+            message = str(error)
+
+        display_error(title, message)
+
+        return False
+    else:
+        return True
+
 class Window:
 
     def __init__(self):
@@ -29,12 +53,8 @@ class Window:
         self.password = config.get_password(self.host, self.port, self.username)
 
         if all((self.host, self.port, self.username, self.password)):
-            try:
-                gateway.connect(self.host, self.port, self.username, self.password)
-                notify("You are now connected")
+            if connect(self.host, self.port, self.username, self.password):
                 sys.exit()
-            except Exception:
-                pass
 
         self.construct()
 
@@ -53,28 +73,11 @@ class Window:
     def connect(self, *args):
         self.window.set_sensitive(False)
 
-        try:
-            gateway.connect(self.host, self.port, self.username, self.password)
+        if connect(self.host, self.port, self.username, self.password):
             config.set_credentials(self.host, self.port, self.username, self.password)
-            notify("You are now connected")
-        except (AuthenticationException, NetworkError, AccountClosedException), error:
-            if type(error) == AuthenticationException: 
-                title = "Failed to authenticate"
-                message = "Please specify a correct username and password."
-            elif type(error) == NetworkError:
-                title = "Could not connect to %s on port %i" % (self.host, self.port)
-                message = "Please make sure you have a network connection."
-            elif type(error) == AccountClosedException:
-                title = "Your account has been closed"
-                message = "You cannot connect to the network until your quota usage drops."
-            else:
-                title = "Unknown error"
-                message = str(error)
-
-            display_error(title, message)
-            self.window.set_sensitive(True)
-        else:
             gtk.main_quit()
+
+        self.window.set_sensitive(True)
 
     def construct(self):
         dic = {'on_gateway_window_destroy': gtk.main_quit,
