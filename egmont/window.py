@@ -51,6 +51,7 @@ class Window:
         self.port = config.get_port()
         self.username = config.get_username()
         self.password = config.get_password(self.host, self.port, self.username)
+        self.remember = False
 
         if all((self.host, self.port, self.username, self.password)):
             if connect(self.host, self.port, self.username, self.password):
@@ -69,12 +70,18 @@ class Window:
 
         if self.password is not None:
             self.password_entry.set_text(self.password)
+            self.remember_checkbox.set_active(True)
         
     def connect(self, *args):
         self.window.set_sensitive(False)
 
         if connect(self.host, self.port, self.username, self.password):
-            config.set_credentials(self.host, self.port, self.username, self.password)
+            if not self.remember:
+                password = ""
+            else:
+                password = self.password
+
+            config.set_credentials(self.host, self.port, self.username, password)
             gtk.main_quit()
 
         self.window.set_sensitive(True)
@@ -97,6 +104,7 @@ class Window:
         self.username_entry = gui.get_widget("username-entry")
         self.password_entry = gui.get_widget("password-entry")
         self.connect_button = gui.get_widget("connect-button")
+        self.remember_checkbox = gui.get_widget("remember-checkbox")
 
     def host_changed_cb(self, *args):
         self.host = self.host_entry.get_text()
@@ -111,6 +119,9 @@ class Window:
     def password_changed_cb(self, *args):
         self.password = self.password_entry.get_text()
         self.credentials_changed_cb()
+
+    def remember_changed(self, *args):
+        self.remember = self.remember_checkbox.get_active()
 
     def credentials_changed_cb(self):
         self.connect_button.set_sensitive(self.username != "" and self.password != "")
