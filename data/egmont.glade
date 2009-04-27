@@ -115,13 +115,14 @@ Enter your username and password to gain access to the Internet.</property>
                     </child>
                     <child>
                       <widget class="GtkCheckButton" id="remember-checkbox">
-                        <property name="label" translatable="yes">Remember password</property>
+                        <property name="label" translatable="yes">_Remember password</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
                         <property name="yalign">0.55000001192092896</property>
-                        <property name="active">True</property>
                         <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_remember_toggled" after="yes"/>
                       </widget>
                       <packing>
                         <property name="left_attach">1</property>

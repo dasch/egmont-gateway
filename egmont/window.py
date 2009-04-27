@@ -24,6 +24,7 @@ def connect(host, port, username, password):
     try:
         gateway.connect(host, port, username, password)
         notify("You are now connected")
+        return True
     except (AuthenticationException, NetworkError, AccountClosedException) as error:
         if type(error) == AuthenticationException: 
             title = "Failed to authenticate"
@@ -41,8 +42,6 @@ def connect(host, port, username, password):
         display_error(title, message)
 
         return False
-    else:
-        return True
 
 class Window:
 
@@ -51,7 +50,7 @@ class Window:
         self.port = config.get_port()
         self.username = config.get_username()
         self.password = config.get_password(self.host, self.port, self.username)
-        self.remember = False
+        self.remember = True
 
         if all((self.host, self.port, self.username, self.password)):
             if connect(self.host, self.port, self.username, self.password):
@@ -70,16 +69,17 @@ class Window:
 
         if self.password is not None:
             self.password_entry.set_text(self.password)
-            self.remember_checkbox.set_active(True)
+
+        self.remember_checkbox.set_active(self.remember)
         
     def connect(self, *args):
         self.window.set_sensitive(False)
 
         if connect(self.host, self.port, self.username, self.password):
-            if not self.remember:
-                password = ""
-            else:
+            if self.remember:
                 password = self.password
+            else:
+                password = ""
 
             config.set_credentials(self.host, self.port, self.username, password)
             gtk.main_quit()
@@ -93,7 +93,8 @@ class Window:
                'on_username_entry_changed': self.username_changed_cb,
                'on_password_entry_changed': self.password_changed_cb,
                'on_host_entry_changed': self.host_changed_cb,
-               'on_port_entry_changed': self.port_changed_cb}
+               'on_port_entry_changed': self.port_changed_cb,
+               'on_remember_toggled': self.remember_toggled_cb}
         gui = gtk.glade.XML(sys.prefix + "/share/egmont-gateway/glade/egmont.glade")
         gui.signal_autoconnect(dic)
 
@@ -120,7 +121,7 @@ class Window:
         self.password = self.password_entry.get_text()
         self.credentials_changed_cb()
 
-    def remember_changed(self, *args):
+    def remember_toggled_cb(self, *args):
         self.remember = self.remember_checkbox.get_active()
 
     def credentials_changed_cb(self):
