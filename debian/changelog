@@ -1,3 +1,9 @@
+egmont-gateway (0.11ubuntu1) jaunty; urgency=low
+
+  * Fixed bug in the password storage.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Mon, 27 Apr 2009 15:15:53 +0200
+
 egmont-gateway (0.10ubuntu1) jaunty; urgency=low
 
   * Allow automatic login.
