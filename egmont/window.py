@@ -23,13 +23,20 @@ def notify(message):
 class Window:
 
     def __init__(self):
-
-        self.construct()
-
         self.host = config.get_host()
         self.port = config.get_port()
         self.username = config.get_username()
         self.password = config.get_password(self.host, self.port, self.username)
+
+        if all((self.host, self.port, self.username, self.password)):
+            try:
+                gateway.connect(self.host, self.port, self.username, self.password)
+                notify("You are now connected")
+                sys.exit()
+            except Exception:
+                pass
+
+        self.construct()
 
         if self.host is not None:
             self.host_entry.set_text(self.host)
