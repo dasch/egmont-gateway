@@ -1,3 +1,9 @@
+egmont-gateway (0.11ubuntu2) karmic; urgency=low
+
+  * Port to Karmic Koala.
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Mon, 26 Oct 2009 01:01:26 +0100
+
 egmont-gateway (0.11ubuntu1) jaunty; urgency=low
 
   * Fixed bug in the password storage.
