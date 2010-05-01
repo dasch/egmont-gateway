@@ -1,3 +1,9 @@
+egmont-gateway (0.11ubuntu3) lucid; urgency=low
+
+  * Compile for Lucid Lynx. 
+
+ -- Daniel Schierbeck <daniel.schierbeck@gmail.com>  Sat, 01 May 2010 02:25:25 +0200
+
 egmont-gateway (0.11ubuntu2) karmic; urgency=low
 
   * Port to Karmic Koala.
